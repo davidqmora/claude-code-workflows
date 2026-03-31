@@ -117,6 +117,7 @@ import { test as base } from '@playwright/test'
 export const test = base.extend<{ seededData: SeedResult }>({
   seededData: async ({ request }, use) => {
     // Arrange: Create test data via API before test
+    // Example: adjust to the project's actual seeding mechanism
     const result = await request.post('/api/test/seed', {
       data: { scenario: 'e2e-user-with-subscription' }
     })
@@ -131,10 +132,10 @@ export const test = base.extend<{ seededData: SeedResult }>({
 ```
 
 **Principles**:
+- Use the application's existing seeding mechanism if present; create new seed endpoints only when no alternative exists
 - Seed data setup belongs to test fixtures, not to a separate manual step
 - Each test must be self-contained: create its own data, clean up after
 - Use API endpoints or direct DB access for seeding — not UI flows
-- When seed endpoints don't exist, creating them is part of the E2E implementation task
 
 ### Authentication Fixture
 
@@ -144,7 +145,8 @@ Implement auth fixtures that match the application's actual login flow:
 // fixtures/auth.fixture.ts
 export const test = base.extend<{ playerPage: Page }>({
   playerPage: async ({ page, request }, use) => {
-    // Use the application's REAL auth endpoint — not admin backdoors
+    // Use the application's existing auth endpoint — not admin backdoors
+    // Example: adjust the URL and payload to match the project's actual login flow
     await request.post('/api/login', {
       data: { loginId: E2E_LOGIN_ID, password: E2E_PASSWORD }
     })
@@ -156,8 +158,8 @@ export const test = base.extend<{ playerPage: Page }>({
 ```
 
 **Principles**:
-- Auth fixtures must use the same authentication flow that real users use
-- Never use admin-only or internal-only endpoints for E2E auth (e.g., `force-login-as`)
+- Use the application's existing authentication flow; auth fixtures must follow the same path that real users use
+- Do not use admin-only or internal-only endpoints for E2E auth (e.g., `force-login-as`)
 - Store test credentials in environment variables, never hardcoded
 - If the auth flow requires specific user records, seed them in the fixture
 

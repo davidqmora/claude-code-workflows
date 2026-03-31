@@ -102,14 +102,14 @@ Decompose tasks based on implementation strategy patterns determined in implemen
    | Existing code modification | The existing implementation files being modified, their tests, related Design Doc sections |
    | New component/feature | Adjacent implementations in the same layer/domain, Design Doc interface contracts |
    | Test implementation | Test skeleton comments/annotations, the target code being tested, actual API/auth flows |
-   | E2E environment setup | Current environment config (docker-compose, seed scripts), existing fixture patterns, application auth flow |
+   | E2E environment setup | Current environment config (startup scripts, docker-compose or equivalent), seed scripts, existing fixture patterns, application auth flow |
    | Bug fix / refactor | The affected code paths, related test coverage, error reproduction context |
 
    **Principles**:
    - Every task must have at least one Investigation Target (even if just the Design Doc)
    - Investigation Targets are **file paths** that the executor will Read — not actions to take
-   - Be specific with file paths: `src/auth/login.ts`, `docs/design/auth.md` — not "the auth module" or "related code"
-   - When the target is a section within a file, write the file path and add a search hint: `docs/design/auth.md (§ Auth Flow)` or `src/auth/login.ts (authenticateUser function)`
+   - Be specific with file paths: `src/auth/login`, `docs/design/auth.md` — not "the auth module" or "related code"
+   - When the target is a section within a file, write the file path and add a search hint: `docs/design/auth.md (§ Auth Flow)` or `src/auth/login (authenticateUser function)`
    - When test skeletons exist for the task, always include them as Investigation Targets
 
 7. **Implementation Pattern Consistency**

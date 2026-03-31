@@ -128,16 +128,17 @@ Read test skeleton files (integration tests, E2E tests) with the Read tool and e
 When E2E test skeletons are provided, scan for environment prerequisites in two stages:
 
 **Stage 1: Detect precondition patterns** — scan all E2E skeletons and list every detected precondition:
-- `// Preconditions:` or `// Arrange:` comments mentioning seed data, test users, subscriptions, or specific DB state
-- `// @dependency: full-system` combined with auth/login setup code
+- `Preconditions:` or `Arrange:` comment annotations mentioning seed data, test users, subscriptions, or specific DB state
+- `@dependency: full-system` combined with auth/login setup code
 - References to environment variables (`E2E_*`, `TEST_*`)
-- External service references requiring mocks (`page.route()`)
+- External service references requiring HTTP mock/intercept patterns in test code
 
-**Stage 2: Generate setup tasks** — for each detected precondition, create a corresponding Phase 0 task:
+**Stage 2: Generate setup tasks** — for each detected precondition, create a corresponding Phase 0 task. Common categories include:
 - **Seed data** → "Create E2E seed data script (test users, required records)"
 - **Auth fixture** → "Implement E2E auth fixture using application's login flow"
 - **External service mocks** → "Configure external service mocks for E2E tests"
 - **Environment configuration** → "Define E2E environment variables and document setup"
+- **Other detected preconditions** → Create a setup task matching the detected category
 
 Place all environment setup tasks in Phase 0 (before any implementation tasks). Mark with `@category: e2e-setup` for traceability.
 

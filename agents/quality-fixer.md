@@ -169,7 +169,7 @@ Return one of the following as the final response (see Output Format for schemas
     {
       "type": "seed_data | library | environment_variable | running_service | other",
       "description": "E2E test database has no test player with active subscription",
-      "affectedTests": ["training.e2e.test.ts"],
+      "affectedTests": ["training-e2e-tests"],
       "resolutionSteps": ["Create seed script for E2E test player", "Add subscription record to seed"]
     }
   ],

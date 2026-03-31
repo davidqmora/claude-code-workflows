@@ -112,7 +112,7 @@ Select and execute files with pattern `docs/plans/tasks/*-task-*.md` that have u
 #### Investigation Targets (Required when present)
 1. Extract file paths from task file "Investigation Targets" section
 2. Read each file with Read tool **before any implementation**. When a search hint is provided (e.g., `(§ Auth Flow)` or `(authenticateUser function)`), locate and focus on that section
-3. Record the key function signatures, data flow, and state transitions observed in each Investigation Target — these observations guide the implementation
+3. Record the key interfaces or function signatures, control/data flow, state transitions, and side effects observed in each Investigation Target — these observations guide the implementation
 4. If an Investigation Target file does not exist or the path is stale, escalate with `reason: "investigation_target_not_found"` (see Escalation Response 2-3)
 
 #### Dependency Deliverables
