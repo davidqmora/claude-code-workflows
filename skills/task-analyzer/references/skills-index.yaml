@@ -214,3 +214,95 @@ skills:
       - "Situations Requiring Technical Decisions"
       - "Implementation Completeness Assurance"
       - "Impact Analysis"
+
+  csharp-rules:
+    skill: "csharp-rules"
+    tags: [dotnet, csharp, implementation, backend, aspnet-core, async, di, nullable, azure]
+    typical-use: "C# and .NET implementation rules for services, APIs, background workers, and shared libraries"
+    size: medium
+    key-references:
+      - "C# Language Guidelines"
+      - ".NET Async Guidance"
+      - "ASP.NET Core DI Guidance"
+    sections:
+      - "Core Principles"
+      - "Type and API Design"
+      - "Asynchrony and Cancellation"
+      - "Error Handling"
+      - "ASP.NET Core Conventions"
+      - "Data Access"
+      - "Azure Integration Defaults"
+      - "Testing Expectations"
+      - "Code Quality"
+
+  dotnet-testing-principles:
+    skill: "dotnet-testing-principles"
+    tags: [dotnet, testing, xunit, aspnet-core, integration-testing, webapplicationfactory, azure, tdd]
+    typical-use: ".NET-specific testing defaults for unit, API integration, and Azure-facing service verification"
+    size: medium
+    key-references:
+      - "xUnit"
+      - "ASP.NET Core Integration Testing"
+      - "WebApplicationFactory"
+    sections:
+      - "Framework Defaults"
+      - "Unit Tests"
+      - "ASP.NET Core Integration Tests"
+      - "Data Layer Testing"
+      - "Azure-Facing Tests"
+      - "API Test Quality"
+      - "Test Naming and Structure"
+      - "Quality Gates"
+
+  aspnetcore-api-guide:
+    skill: "aspnetcore-api-guide"
+    tags: [dotnet, aspnet-core, api, openapi, auth, validation, middleware, di]
+    typical-use: "Design and implementation guidance for ASP.NET Core Web APIs"
+    size: medium
+    key-references:
+      - "ASP.NET Core Web API"
+      - "OpenAPI"
+      - "Policy-based Authorization"
+    sections:
+      - "API Shape Defaults"
+      - "Dependency Injection"
+      - "Validation and Contracts"
+      - "Authentication and Authorization"
+      - "Observability"
+      - "OpenAPI and Compatibility"
+      - "Background and Event-Driven Work"
+
+  azure-architecture-guide:
+    skill: "azure-architecture-guide"
+    tags: [azure, architecture, app-service, key-vault, app-insights, managed-identity, cosmos-db, event-grid, entra]
+    typical-use: "Opinionated Azure defaults and architectural guidance for .NET applications"
+    size: medium
+    key-references:
+      - "Azure Well-Architected Framework"
+      - "Managed Identity"
+      - "Application Insights"
+    sections:
+      - "Opinionated Defaults"
+      - "Architecture Boundaries"
+      - "Configuration and Secrets"
+      - "Identity and Security"
+      - "Telemetry and Operations"
+      - "Service-Specific Notes"
+      - "When Not to Force Azure Defaults"
+
+  dotnet-build-and-quality:
+    skill: "dotnet-build-and-quality"
+    tags: [dotnet, quality, build, analyzers, format, test, openapi]
+    typical-use: ".NET quality-check workflow for formatting, building, analyzer cleanup, and test execution"
+    size: small
+    key-references:
+      - "dotnet format"
+      - "dotnet build"
+      - "dotnet test"
+    sections:
+      - "Detection Priorities"
+      - "Default Quality Workflow"
+      - "Analyzer Expectations"
+      - "Build Expectations"
+      - "Test Expectations"
+      - "Common Fix Themes"

@@ -71,6 +71,9 @@ Consider hidden dependencies:
 | New features | design, implementation, documentation |
 | Performance | profiling, optimization, testing |
 | Frontend | typescript-rules, test-implement |
+| .NET / C# | csharp-rules, dotnet-testing-principles |
+| ASP.NET Core API | aspnetcore-api-guide, dotnet-testing-principles |
+| Azure integration | azure-architecture-guide, aspnetcore-api-guide |
 | API/Integration | integration-e2e-testing |
 
 ## Output Format

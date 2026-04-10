@@ -345,6 +345,17 @@ These agents work the same way whether you're building a REST API or a React app
 | **rule-advisor** | Picks the best coding rules for your current task |
 | **design-sync** | Verifies consistency across multiple Design Docs and detects conflicts |
 
+### .NET-Specific Agents (dev-workflows-dotnet)
+
+| Agent | What It Does |
+|-------|--------------|
+| **technical-designer** | Plans .NET, ASP.NET Core, and Azure-oriented architecture decisions |
+| **acceptance-test-generator** | Creates .NET-oriented integration and E2E test scaffolds from requirements |
+| **task-executor** | Implements C# and ASP.NET Core tasks using .NET-specific coding and testing defaults |
+| **quality-fixer** | Runs .NET quality checks such as format, build, analyzers, and tests |
+| **security-reviewer** | Reviews .NET and Azure implementations for auth, secrets, storage, and cloud-boundary risks |
+| **rule-advisor** | Picks the best coding rules for your current task |
+
 ---
 
 ## 📚 Built-in Best Practices
@@ -360,6 +371,14 @@ These are loaded as skills and automatically applied by agents when relevant.
 
 The frontend plugin has React and TypeScript-specific rules built in.
 
+The `.NET` plugin family adds stack-specific skills:
+
+- **C# Rules** - C#/.NET implementation defaults, async/cancellation, DI, and data-access guidance
+- **.NET Testing Principles** - xUnit, WebApplicationFactory/TestServer, and Azure-facing test defaults
+- **ASP.NET Core API Guide** - API shape, auth, validation, DI, OpenAPI, and observability guidance
+- **Azure Architecture Guide** - App Service, Key Vault, Application Insights, Storage, Cosmos DB, Event Grid, and Entra ID/B2C defaults
+- **.NET Build and Quality** - `dotnet format`, `dotnet build`, `dotnet test`, analyzer, and OpenAPI/build hygiene workflow
+
 ---
 
 ## 🚀 What These Plugins Do
@@ -374,9 +393,9 @@ Each phase runs in a fresh agent context, so quality doesn't degrade as the task
 
 The frontend plugin adds React-specific agents (component architecture, Testing Library, TypeScript-first quality checks) and UI Spec generation from optional prototype code.
 
-The new .NET plugin family is being introduced in parallel:
-- `dev-workflows-dotnet` starts from the backend workflow set and is being retuned for C#, ASP.NET Core Web API, and Azure defaults
-- `dev-workflows-blazor` starts from the frontend workflow set and is being retuned for Blazor UI work
+The new .NET plugin family now includes a first-pass .NET/Azure backend workflow surface:
+- `dev-workflows-dotnet` uses .NET-specific skills and backend agents for C#, ASP.NET Core Web API, and Azure-oriented work
+- `dev-workflows-blazor` remains the UI-specialized companion and will be retuned further for Blazor-specific workflows
 - `dev-skills-dotnet` is the skills-only companion for teams with their own orchestration
 
 ### Why UI Spec Exists
