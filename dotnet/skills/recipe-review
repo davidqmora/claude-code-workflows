@@ -1,1 +1,16 @@
-../../skills/recipe-review
+---
+name: recipe-review
+description: Review .NET implementation for design compliance and security, with optional auto-fixes
+disable-model-invocation: true
+---
+
+Design Doc: $ARGUMENTS
+
+## Review Flow
+
+1. Invoke `dev-workflows-dotnet:code-reviewer`
+2. Invoke `dev-workflows-dotnet:security-reviewer`
+3. If fixes are approved, create a review-fixes task and execute:
+   - `dev-workflows-dotnet:task-executor`
+   - `dev-workflows-dotnet:quality-fixer`
+4. Re-run reviewer agents until compliant or blocked

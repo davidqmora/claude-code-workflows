@@ -1,1 +1,12 @@
-../../skills/recipe-plan
+---
+name: recipe-plan
+description: Create a .NET work plan from a design document and obtain approval
+disable-model-invocation: true
+---
+
+## Execution Protocol
+
+1. Select the target Design Doc.
+2. If the user wants generated test skeletons first, invoke `dev-workflows-dotnet:acceptance-test-generator`.
+3. Invoke `dev-workflows-dotnet:work-planner` with the Design Doc and any generated integration/E2E skeleton paths.
+4. Present the resulting work plan for approval and revise if needed.

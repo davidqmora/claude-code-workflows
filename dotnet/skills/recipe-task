@@ -1,1 +1,13 @@
-../../skills/recipe-task
+---
+name: recipe-task
+description: Execute focused .NET tasks with rule-advisor metacognition
+disable-model-invocation: true
+---
+
+Task: $ARGUMENTS
+
+## Mandatory Execution Process
+
+1. Invoke `dev-workflows-dotnet:rule-advisor`
+2. Use the selected rules and first-step recommendation to structure work with TaskCreate
+3. Execute the task following the selected .NET/Azure rules and the resulting task structure

@@ -415,6 +415,8 @@ The new .NET plugin family now includes both backend and UI-specialized surfaces
 - `dev-workflows-blazor` uses Blazor-specific UI skills and agent prompts for Razor component and page workflows
 - `dev-skills-dotnet` is the skills-only companion for teams with their own orchestration
 
+Within these plugins, the recipe commands keep the familiar names (`/recipe-implement`, `/recipe-front-design`, `/recipe-task`, etc.), but now dispatch to the `.NET` and `Blazor` plugin-specific subagent namespaces instead of the original web-focused ones.
+
 ### Why UI Spec Exists
 
 Prototypes show what the UI looks like, but not how it behaves across states, errors, and API boundaries. The gaps surface during integration — each task works alone but the whole doesn't hold up.

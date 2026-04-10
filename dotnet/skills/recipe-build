@@ -1,1 +1,21 @@
-../../skills/recipe-build
+---
+name: recipe-build
+description: Execute decomposed .NET tasks in autonomous execution mode
+disable-model-invocation: true
+---
+
+Work plan: $ARGUMENTS
+
+## Execution Protocol
+
+1. Use `dev-workflows-dotnet:task-decomposer` if tasks must be generated from a work plan.
+2. Execute each task with the cycle:
+   - `dev-workflows-dotnet:task-executor`
+   - escalation check
+   - `dev-workflows-dotnet:quality-fixer`
+   - commit
+3. After all tasks, run:
+   - `dev-workflows-dotnet:code-verifier`
+   - `dev-workflows-dotnet:security-reviewer`
+
+Only proceed to the next task after `quality-fixer` returns `approved`.

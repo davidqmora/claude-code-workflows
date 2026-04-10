@@ -1,1 +1,18 @@
-../../skills/recipe-reverse-engineer
+---
+name: recipe-reverse-engineer
+description: Generate PRDs and Design Docs from an existing .NET or .NET+Blazor codebase
+disable-model-invocation: true
+---
+
+Target scope: $ARGUMENTS
+
+## Execution Flow
+
+1. Discover scope with `dev-workflows-dotnet:scope-discoverer`
+2. Generate PRDs with `dev-workflows-dotnet:prd-creator`
+3. Verify and review PRDs with:
+   - `dev-workflows-dotnet:code-verifier`
+   - `dev-workflows-dotnet:document-reviewer`
+4. Generate backend Design Docs with `dev-workflows-dotnet:technical-designer`
+5. When UI/fullstack scope exists, generate Blazor Design Docs with `dev-workflows-blazor:technical-designer-frontend`
+6. Verify and review resulting Design Docs before presenting for approval

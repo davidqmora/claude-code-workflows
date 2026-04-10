@@ -1,1 +1,15 @@
-../../skills/recipe-front-design
+---
+name: recipe-front-design
+description: Execute from requirement analysis to Blazor UI design document creation
+disable-model-invocation: true
+---
+
+Requirements: $ARGUMENTS
+
+## Execution Protocol
+
+1. Use `dev-workflows-blazor:requirement-analyzer` for scale determination.
+2. Create the UI Spec with `dev-workflows-blazor:ui-spec-designer` and review it with `dev-workflows-blazor:document-reviewer`.
+3. Analyze the codebase with `dev-workflows-blazor:codebase-analyzer`.
+4. Create ADRs or Design Docs with `dev-workflows-blazor:technical-designer-frontend`.
+5. Verify with `dev-workflows-blazor:code-verifier`, review with `dev-workflows-blazor:document-reviewer`, and run `dev-workflows-blazor:design-sync`.

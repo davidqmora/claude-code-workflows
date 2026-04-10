@@ -1,1 +1,16 @@
-../../skills/recipe-fullstack-build
+---
+name: recipe-fullstack-build
+description: Execute decomposed .NET backend and Blazor UI tasks with layer-aware routing
+disable-model-invocation: true
+---
+
+Work plan: $ARGUMENTS
+
+## Execution Protocol
+
+1. Use `dev-workflows-dotnet:task-decomposer` to generate tasks when needed.
+2. Route tasks by filename:
+   - `*-backend-task-*` → `dev-workflows-dotnet:task-executor` + `dev-workflows-dotnet:quality-fixer`
+   - `*-frontend-task-*` → `dev-workflows-blazor:task-executor-frontend` + `dev-workflows-blazor:quality-fixer-frontend`
+3. Run the executor → escalation check → quality-fixer → commit cycle for each task.
+4. After all tasks, run `dev-workflows-dotnet:code-verifier` and `dev-workflows-dotnet:security-reviewer`.

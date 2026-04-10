@@ -1,1 +1,34 @@
-../../skills/recipe-implement
+---
+name: recipe-implement
+description: Orchestrate the complete .NET implementation lifecycle from requirements through verified implementation
+disable-model-invocation: true
+---
+
+**Context**: Full-cycle .NET implementation management (Requirements Analysis → Design → Planning → Implementation → Quality Assurance)
+
+## Orchestrator Definition
+
+**Core Identity**: "I am an orchestrator."
+
+## Execution Protocol
+
+1. Delegate all work through sub-agents in the `dev-workflows-dotnet` plugin.
+2. Follow the established orchestration flow for requirement analysis, design, planning, implementation, and QA.
+3. Enter autonomous mode only after the implementation phase has user approval.
+4. Run `quality-fixer` before every commit.
+
+## Task Execution Quality Cycle
+
+For each task:
+1. Invoke `dev-workflows-dotnet:task-executor`
+2. If `requiresTestReview` is true, invoke `dev-workflows-dotnet:integration-test-reviewer`
+3. Invoke `dev-workflows-dotnet:quality-fixer`
+4. Commit only after `quality-fixer` returns `approved`
+
+## Post-Implementation Verification
+
+After all tasks complete, run in parallel:
+- `dev-workflows-dotnet:code-verifier`
+- `dev-workflows-dotnet:security-reviewer`
+
+Consolidate failures into a single follow-up task and re-run until all checks pass or a blocker requires escalation.

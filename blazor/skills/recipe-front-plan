@@ -1,1 +1,12 @@
-../../skills/recipe-front-plan
+---
+name: recipe-front-plan
+description: Create a Blazor UI work plan from a design document and obtain approval
+disable-model-invocation: true
+---
+
+## Execution Protocol
+
+1. Select the target Design Doc.
+2. If requested, generate test skeletons with `dev-workflows-blazor:acceptance-test-generator`.
+3. Invoke `dev-workflows-blazor:work-planner` with the Design Doc and any generated test skeleton paths.
+4. Present the resulting work plan for approval and revise if needed.

@@ -1,1 +1,16 @@
-../../skills/recipe-front-review
+---
+name: recipe-front-review
+description: Review Blazor UI implementation for design compliance and security, with optional auto-fixes
+disable-model-invocation: true
+---
+
+Design Doc: $ARGUMENTS
+
+## Review Flow
+
+1. Invoke `dev-workflows-blazor:code-reviewer`
+2. Invoke `dev-workflows-blazor:security-reviewer`
+3. If fixes are approved, create a review-fixes task and execute:
+   - `dev-workflows-blazor:task-executor-frontend`
+   - `dev-workflows-blazor:quality-fixer-frontend`
+4. Re-run reviewers until compliant or blocked

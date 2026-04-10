@@ -1,1 +1,19 @@
-../../skills/recipe-add-integration-tests
+---
+name: recipe-add-integration-tests
+description: Add integration or end-to-end tests to existing .NET or .NET+Blazor code using Design Docs
+disable-model-invocation: true
+---
+
+Document paths: $ARGUMENTS
+
+## Execution Flow
+
+1. Generate test skeletons with `dev-workflows-dotnet:acceptance-test-generator`
+2. Create per-layer task files for the generated skeletons
+3. Route execution by task filename:
+   - `*-backend-task-*` → `dev-workflows-dotnet:task-executor`
+   - `*-frontend-task-*` → `dev-workflows-blazor:task-executor-frontend`
+4. Review tests with `dev-workflows-dotnet:integration-test-reviewer`
+5. Run layer-appropriate quality checks:
+   - backend → `dev-workflows-dotnet:quality-fixer`
+   - frontend → `dev-workflows-blazor:quality-fixer-frontend`

@@ -1,1 +1,19 @@
-../../skills/recipe-fullstack-implement
+---
+name: recipe-fullstack-implement
+description: Orchestrate full-cycle implementation across .NET backend and Blazor UI layers
+disable-model-invocation: true
+---
+
+Requirements: $ARGUMENTS
+
+## Execution Protocol
+
+1. Treat the backend layer as `dev-workflows-dotnet` and the UI layer as `dev-workflows-blazor`.
+2. Create the UI Spec with `dev-workflows-blazor:ui-spec-designer` before the Blazor Design Doc.
+3. Create backend Design Docs with `dev-workflows-dotnet:technical-designer`.
+4. Create Blazor Design Docs with `dev-workflows-blazor:technical-designer-frontend`.
+5. Pass both layers into planning with `dev-workflows-dotnet:work-planner`.
+6. Route implementation tasks by filename:
+   - `*-backend-task-*` → `dev-workflows-dotnet:task-executor` + `dev-workflows-dotnet:quality-fixer`
+   - `*-frontend-task-*` → `dev-workflows-blazor:task-executor-frontend` + `dev-workflows-blazor:quality-fixer-frontend`
+7. Finish with `dev-workflows-dotnet:code-verifier` and `dev-workflows-dotnet:security-reviewer`.

@@ -1,1 +1,19 @@
-../../skills/recipe-front-build
+---
+name: recipe-front-build
+description: Execute Blazor UI implementation in autonomous execution mode
+disable-model-invocation: true
+---
+
+Work plan: $ARGUMENTS
+
+## Execution Protocol
+
+1. Use `dev-workflows-blazor:task-decomposer` when task files must be generated.
+2. Execute each UI task with:
+   - `dev-workflows-blazor:task-executor-frontend`
+   - escalation check
+   - `dev-workflows-blazor:quality-fixer-frontend`
+   - commit
+3. After all tasks, run:
+   - `dev-workflows-blazor:code-verifier`
+   - `dev-workflows-blazor:security-reviewer`
