@@ -71,6 +71,7 @@ Consider hidden dependencies:
 | New features | design, implementation, documentation |
 | Performance | profiling, optimization, testing |
 | Frontend | typescript-rules, test-implement |
+| Blazor UI | blazor-rules, blazor-test-implement, blazor-ui-guide |
 | .NET / C# | csharp-rules, dotnet-testing-principles |
 | ASP.NET Core API | aspnetcore-api-guide, dotnet-testing-principles |
 | Azure integration | azure-architecture-guide, aspnetcore-api-guide |

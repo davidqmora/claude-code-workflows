@@ -286,8 +286,8 @@ All workflow entry points use the `recipe-` prefix to distinguish them from know
 
 | Recipe | Purpose | When to Use |
 |--------|---------|-------------|
-| `/recipe-front-design` | Create UI Spec + frontend Design Doc | Blazor component architecture, UI Spec |
-| `/recipe-front-plan` | Generate frontend work plan | Blazor component breakdown planning |
+| `/recipe-front-design` | Create UI Spec + frontend Design Doc | Blazor page and component architecture, UI Spec |
+| `/recipe-front-plan` | Generate frontend work plan | Blazor page/component breakdown planning |
 | `/recipe-front-build` | Execute frontend task plan | Resume Blazor implementation |
 | `/recipe-front-review` | Verify code against design docs | Post-implementation check |
 | `/recipe-task` | Execute single task with precision | Component fixes, small UI updates |
@@ -302,7 +302,7 @@ The workflow uses specialized agents for each stage of the development lifecycle
 
 ### Shared Agents (Available in Both Plugins)
 
-These agents work the same way whether you're building a REST API or a React app:
+These agents work the same way whether you're building a REST API or a UI application:
 
 | Agent | What It Does |
 |-------|--------------|
@@ -356,6 +356,17 @@ These agents work the same way whether you're building a REST API or a React app
 | **security-reviewer** | Reviews .NET and Azure implementations for auth, secrets, storage, and cloud-boundary risks |
 | **rule-advisor** | Picks the best coding rules for your current task |
 
+### Blazor-Specific Agents (dev-workflows-blazor)
+
+| Agent | What It Does |
+|-------|--------------|
+| **ui-spec-designer** | Creates UI Specifications for Blazor pages and components |
+| **technical-designer-frontend** | Plans Blazor component, layout, and interaction architecture |
+| **task-executor-frontend** | Implements Blazor pages and components using Blazor-specific testing defaults |
+| **quality-fixer-frontend** | Runs .NET build/test checks plus Blazor-specific UI quality verification |
+| **rule-advisor** | Picks the best coding rules for your current task |
+| **design-sync** | Verifies consistency across multiple Design Docs and detects conflicts |
+
 ---
 
 ## 📚 Built-in Best Practices
@@ -379,6 +390,12 @@ The `.NET` plugin family adds stack-specific skills:
 - **Azure Architecture Guide** - App Service, Key Vault, Application Insights, Storage, Cosmos DB, Event Grid, and Entra ID/B2C defaults
 - **.NET Build and Quality** - `dotnet format`, `dotnet build`, `dotnet test`, analyzer, and OpenAPI/build hygiene workflow
 
+The Blazor plugin adds UI-specific skills:
+
+- **Blazor Rules** - Razor component design, parameters, validation, lifecycle, auth-sensitive UI, and JS interop guidance
+- **Blazor UI Guide** - Blazor-specific anti-patterns, debugging, design checks, and quality workflow
+- **Blazor Test Implement** - bUnit, host-backed UI verification, and Playwright guidance for Blazor features
+
 ---
 
 ## 🚀 What These Plugins Do
@@ -386,16 +403,16 @@ The `.NET` plugin family adds stack-specific skills:
 Each phase runs in a fresh agent context, so quality doesn't degrade as the task grows:
 
 - **Analyze** → requirement-analyzer determines scale and workflow
-- **Design** → technical-designer (+ ui-spec-designer for frontend) produces testable specs with acceptance criteria
+- **Design** → technical-designer (+ ui-spec-designer for UI-specialized plugins) produces testable specs with acceptance criteria
 - **Plan** → work-planner schedules integration by value unit, not by layer — so each phase delivers a working vertical slice
 - **Implement** → task-executor builds and tests each task, quality-fixer verifies before every commit
 - **Verify** → acceptance criteria trace from design through test skeletons, so nothing is left implicit
 
-The frontend plugin adds React-specific agents (component architecture, Testing Library, TypeScript-first quality checks) and UI Spec generation from optional prototype code.
+The frontend plugin adds React-specific agents, and the Blazor plugin adds Blazor-specific UI agents and UI Spec generation from optional prototype code.
 
-The new .NET plugin family now includes a first-pass .NET/Azure backend workflow surface:
+The new .NET plugin family now includes both backend and UI-specialized surfaces:
 - `dev-workflows-dotnet` uses .NET-specific skills and backend agents for C#, ASP.NET Core Web API, and Azure-oriented work
-- `dev-workflows-blazor` remains the UI-specialized companion and will be retuned further for Blazor-specific workflows
+- `dev-workflows-blazor` uses Blazor-specific UI skills and agent prompts for Razor component and page workflows
 - `dev-skills-dotnet` is the skills-only companion for teams with their own orchestration
 
 ### Why UI Spec Exists

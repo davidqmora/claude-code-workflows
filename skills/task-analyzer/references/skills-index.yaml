@@ -306,3 +306,55 @@ skills:
       - "Build Expectations"
       - "Test Expectations"
       - "Common Fix Themes"
+
+  blazor-rules:
+    skill: "blazor-rules"
+    tags: [blazor, ui, razor, components, forms, validation, js-interop, dotnet]
+    typical-use: "Blazor component development rules for Razor components, forms, state, and JS interop boundaries"
+    size: medium
+    key-references:
+      - "Blazor Components"
+      - "EditForm"
+      - "EventCallback"
+    sections:
+      - "Core Principles"
+      - "Component Design"
+      - "State and Data Flow"
+      - "Forms and Validation"
+      - "JS Interop"
+      - "Rendering and Lifecycle"
+      - "Security and Auth"
+      - "Testing Expectations"
+
+  blazor-ui-guide:
+    skill: "blazor-ui-guide"
+    tags: [blazor, ui, anti-patterns, quality, debugging, accessibility, technical-judgment]
+    typical-use: "Blazor-specific UI decision criteria, anti-pattern detection, debugging, and quality workflow"
+    size: medium
+    key-references:
+      - "Blazor Lifecycle"
+      - "Accessibility"
+      - "Component Reuse"
+    sections:
+      - "UI Anti-Patterns"
+      - "Design Guidance"
+      - "Debugging Guidance"
+      - "Quality Workflow"
+      - "Technical Decision Triggers"
+      - "Completeness Checks"
+
+  blazor-test-implement:
+    skill: "blazor-test-implement"
+    tags: [blazor, testing, bunit, playwright, ui, integration-testing]
+    typical-use: "Blazor UI test implementation guidance for bUnit, host-backed verification, and Playwright"
+    size: small
+    key-references:
+      - "bUnit"
+      - "Playwright"
+      - "ASP.NET Core Integration Testing"
+    sections:
+      - "Reference Selection"
+      - "Common Principles"
+      - "bUnit Defaults"
+      - "Host-Backed UI Verification"
+      - "E2E"
