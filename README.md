@@ -16,6 +16,8 @@ This marketplace includes the following plugins:
 **Core plugins:**
 - **dev-workflows** - Backend and general-purpose development
 - **dev-workflows-frontend** - React/TypeScript specialized workflows
+- **dev-workflows-dotnet** - .NET/C#/ASP.NET Core Web API/Azure specialized workflows
+- **dev-workflows-blazor** - Blazor specialized workflows
 
 **Optional add-ons** (enhance core plugins):
 - **[claude-code-discover](https://github.com/shinpr/claude-code-discover)** - Turns feature ideas into evidence-backed PRDs
@@ -24,6 +26,7 @@ This marketplace includes the following plugins:
 
 **Skills only** (for users with existing workflows):
 - **dev-skills** - Coding best practices, testing principles, and design guidelines — no workflow recipes
+- **dev-skills-dotnet** - .NET/Azure-oriented best practices and design guidance — no workflow recipes
 
 These plugins provide end-to-end workflows for AI-assisted development. Choose what fits your project:
 
@@ -60,6 +63,36 @@ claude
 /recipe-front-design <your feature>
 ```
 
+### .NET / ASP.NET Core / Azure Development
+
+```bash
+# 1-2. Same as above (start Claude Code and add marketplace)
+
+# 3. Install .NET plugin
+/plugin install dev-workflows-dotnet@claude-code-workflows
+
+# 4. Reload plugins
+/reload-plugins
+
+# 5. Start building
+/recipe-implement "Add an ASP.NET Core Web API endpoint with Azure integration"
+```
+
+### Blazor Development
+
+```bash
+# 1-2. Same as above (start Claude Code and add marketplace)
+
+# 3. Install Blazor plugin
+/plugin install dev-workflows-blazor@claude-code-workflows
+
+# 4. Reload plugins
+/reload-plugins
+
+# 5. Start building
+/recipe-front-design "Add a Blazor page and component workflow"
+```
+
 ### Full-Stack Development
 
 Install both plugins to get the complete toolkit for backend and frontend work.
@@ -89,17 +122,20 @@ The fullstack recipes create separate Design Docs per layer (backend + frontend)
 
 ### Skills Only (For Users with Existing Workflows)
 
-If you already have your own orchestration (custom prompts, scripts, CI-driven loops) and just want the best-practice guides, use `dev-skills`. If you want Claude to plan, execute, and verify end-to-end, install `dev-workflows` instead.
+If you already have your own orchestration (custom prompts, scripts, CI-driven loops) and just want the best-practice guides, use `dev-skills` or `dev-skills-dotnet`. If you want Claude to plan, execute, and verify end-to-end, install the workflow plugin that matches your stack instead.
 
 - Minimal context footprint — no agents or recipe skills loaded
 - Drop-in best practices without changing your workflow
 - Works as a ruleset layer for your own orchestrator
 
-> **Do not install alongside dev-workflows or dev-workflows-frontend** — duplicate skills will be silently ignored. See [details below](#warning-duplicate-skills).
+> **Do not install alongside a workflow plugin from the same stack family** — duplicate skills will be silently ignored. See [details below](#warning-duplicate-skills).
 
 ```bash
 # Install skills-only plugin
 /plugin install dev-skills@claude-code-workflows
+
+# Install .NET skills-only plugin
+/plugin install dev-skills-dotnet@claude-code-workflows
 ```
 
 Skills auto-load when relevant — `coding-principles` activates during implementation, `testing-principles` during test writing, etc.
@@ -119,6 +155,8 @@ Skills auto-load when relevant — `coding-principles` activates during implemen
 <a id="warning-duplicate-skills"></a>
 
 > **Warning:** dev-skills and dev-workflows / dev-workflows-frontend share the same skills. Installing both causes skill descriptions to appear twice in the system context. Claude Code limits skill descriptions to ~2% of the context window — exceeding this limit causes skills to be silently ignored.
+
+> The same caution applies to `dev-skills-dotnet` and the new `.NET`/`Blazor` workflow plugins while the .NET-specific skill set is being split into stack-specific variants.
 
 ---
 
@@ -229,6 +267,33 @@ All workflow entry points use the `recipe-` prefix to distinguish them from know
 
 > **Tip**: Both plugins share `/recipe-task`, `/recipe-diagnose`, and `/recipe-update-doc`. `/recipe-update-doc` auto-detects the document's layer. If your project has frontend Design Docs, the frontend plugin is needed to update them. For reverse engineering, use `/recipe-reverse-engineer` with the fullstack option to generate both backend and frontend Design Docs in a single workflow.
 
+### .NET / Azure Development (dev-workflows-dotnet)
+
+| Recipe | Purpose | When to Use |
+|--------|---------|-------------|
+| `/recipe-implement` | End-to-end feature development | ASP.NET Core APIs, background services, Azure integrations |
+| `/recipe-task` | Execute single task with precision | Focused .NET changes, bug fixes, incremental work |
+| `/recipe-design` | Create design documentation | API, integration, and architecture planning |
+| `/recipe-plan` | Generate work plan from design | Implementation planning |
+| `/recipe-build` | Execute from existing task plan | Resume .NET implementation |
+| `/recipe-review` | Verify code against design docs | Post-implementation check |
+| `/recipe-diagnose` | Investigate problems and derive solutions | Bug investigation, root cause analysis |
+| `/recipe-reverse-engineer` | Generate PRD/Design Docs from existing code | Legacy system documentation, codebase understanding |
+| `/recipe-add-integration-tests` | Add integration/E2E tests to existing code | Test coverage for existing implementations |
+| `/recipe-update-doc` | Update existing design documents with review | Spec changes, review feedback, document maintenance |
+
+### Blazor Development (dev-workflows-blazor)
+
+| Recipe | Purpose | When to Use |
+|--------|---------|-------------|
+| `/recipe-front-design` | Create UI Spec + frontend Design Doc | Blazor component architecture, UI Spec |
+| `/recipe-front-plan` | Generate frontend work plan | Blazor component breakdown planning |
+| `/recipe-front-build` | Execute frontend task plan | Resume Blazor implementation |
+| `/recipe-front-review` | Verify code against design docs | Post-implementation check |
+| `/recipe-task` | Execute single task with precision | Component fixes, small UI updates |
+| `/recipe-diagnose` | Investigate problems and derive solutions | Bug investigation, root cause analysis |
+| `/recipe-update-doc` | Update existing design documents with review | Spec changes, review feedback, document maintenance |
+
 ---
 
 ## 📦 Specialized Agents
@@ -308,6 +373,11 @@ Each phase runs in a fresh agent context, so quality doesn't degrade as the task
 - **Verify** → acceptance criteria trace from design through test skeletons, so nothing is left implicit
 
 The frontend plugin adds React-specific agents (component architecture, Testing Library, TypeScript-first quality checks) and UI Spec generation from optional prototype code.
+
+The new .NET plugin family is being introduced in parallel:
+- `dev-workflows-dotnet` starts from the backend workflow set and is being retuned for C#, ASP.NET Core Web API, and Azure defaults
+- `dev-workflows-blazor` starts from the frontend workflow set and is being retuned for Blazor UI work
+- `dev-skills-dotnet` is the skills-only companion for teams with their own orchestration
 
 ### Why UI Spec Exists
 
@@ -473,8 +543,25 @@ claude-code-workflows/
 │   └── .claude-plugin/
 │       └── plugin.json
 │
+├── dotnet/                     # dev-workflows-dotnet plugin
+│   ├── agents/                 # Initial fork of backend workflow assets
+│   ├── skills/                 # Initial fork of shared skills
+│   └── .claude-plugin/
+│       └── plugin.json
+│
+├── blazor/                     # dev-workflows-blazor plugin
+│   ├── agents/                 # Initial fork of frontend workflow assets
+│   ├── skills/                 # Initial fork of frontend-oriented skills
+│   └── .claude-plugin/
+│       └── plugin.json
+│
 ├── skills-only/                # dev-skills plugin (knowledge skills only, no recipes/agents)
 │   ├── skills/                 # Symlinks to shared knowledge skills (9 of 11 — workflow-specific skills excluded)
+│   └── .claude-plugin/
+│       └── plugin.json
+│
+├── skills-dotnet/              # dev-skills-dotnet plugin (knowledge skills only, no recipes/agents)
+│   ├── skills/                 # Initial fork of skills-only assets for .NET/Azure specialization
 │   └── .claude-plugin/
 │       └── plugin.json
 │
@@ -491,17 +578,19 @@ claude-code-workflows/
 A: Depends on what you're building:
 - **Backend, APIs, CLI tools, or general programming** → Install `dev-workflows`
 - **React apps** → Install `dev-workflows-frontend`
+- **ASP.NET Core Web API, C#, or Azure-heavy backends** → Install `dev-workflows-dotnet`
+- **Blazor apps** → Install `dev-workflows-blazor`
 - **Full-stack projects** → Install both
 
 Both plugins can run side-by-side without conflicts.
 
 **Q: Can I use both plugins at the same time?**
 
-A: Yes! They're designed to work together. Install both if you're building a full-stack app. Use `/recipe-fullstack-implement` for features that span both backend and frontend — it creates separate Design Docs per layer and routes tasks to the appropriate executor automatically.
+A: Yes. Install the pair that matches your stack. For example, use `dev-workflows` + `dev-workflows-frontend` for the existing Node/React flow, or `dev-workflows-dotnet` + `dev-workflows-blazor` for the new .NET/Blazor flow.
 
 **Q: Do I need to learn special commands?**
 
-A: Not really. For backend, just use `/recipe-implement`. For frontend, use `/recipe-front-design`. The plugins handle everything else automatically.
+A: Not really. For backend-style plugins, start with `/recipe-implement`. For UI-specialized plugins, start with `/recipe-front-design`. The plugins handle everything else automatically.
 
 **Q: What if there are errors?**
 
@@ -513,7 +602,7 @@ A: Yes! **[codex-workflows](https://github.com/shinpr/codex-workflows)** provide
 
 **Q: What's the difference between dev-skills and dev-workflows?**
 
-A: `dev-skills` provides only coding best practices as skills (`coding-principles`, `testing-principles`, etc.) — no workflow recipes or agents. `dev-workflows` includes the same skills plus recipes like `/recipe-implement` and specialized agents for full orchestrated development. Use `dev-skills` if you already have your own orchestration and just want the knowledge guides. They should not be installed together. See [Skills Only](#skills-only-for-users-with-existing-workflows) for details and switching instructions.
+A: `dev-skills` and `dev-skills-dotnet` provide only coding best practices as skills — no workflow recipes or agents. The `dev-workflows*` plugins include skills plus recipes and specialized agents for full orchestrated development. Use the skills-only variant if you already have your own orchestration and just want the knowledge guides. Do not install a skills-only plugin alongside the matching workflow plugin for the same stack family.
 
 ---
 

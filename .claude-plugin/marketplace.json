@@ -19,9 +19,24 @@
       "description": "Skills + Subagents for React/TypeScript - Use skills for coding guidance, or run recipe workflows for full orchestrated agentic coding with specialized agents"
     },
     {
+      "name": "dev-workflows-dotnet",
+      "source": "./dotnet",
+      "description": "Skills + Subagents for .NET, C#, ASP.NET Core Web API, and Azure-oriented development"
+    },
+    {
+      "name": "dev-workflows-blazor",
+      "source": "./blazor",
+      "description": "Skills + Subagents for Blazor UI development"
+    },
+    {
       "name": "dev-skills",
       "source": "./skills-only",
       "description": "Lightweight skills for users with existing workflows - coding best practices, testing principles, and design guidelines without recipe workflows or agents"
+    },
+    {
+      "name": "dev-skills-dotnet",
+      "source": "./skills-dotnet",
+      "description": "Lightweight .NET and Azure-oriented skills for users with existing workflows - no recipe workflows or agents"
     },
     {
       "name": "metronome",

@@ -1,0 +1,25 @@
+{
+  "name": "dev-skills-dotnet",
+  "version": "0.16.12",
+  "description": "Lightweight .NET and Azure-oriented skills for users with existing workflows - coding best practices, testing principles, and design guidelines without commands or agents",
+  "author": {
+    "name": "Shinsuke Kagawa",
+    "url": "https://github.com/shinpr"
+  },
+  "homepage": "https://github.com/shinpr/claude-code-workflows",
+  "repository": "https://github.com/shinpr/claude-code-workflows.git",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "best-practices",
+    "coding-standards",
+    "testing",
+    "tdd",
+    "design-docs",
+    "development",
+    "quality",
+    "dotnet",
+    "csharp",
+    "azure"
+  ]
+}
