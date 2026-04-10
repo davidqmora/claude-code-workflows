@@ -14,7 +14,7 @@
 This marketplace includes the following plugins:
 
 **Core plugins:**
-- **dev-workflows** - Backend and general-purpose development
+- **dev-workflows** - Service/backend and general-purpose development
 - **dev-workflows-frontend** - React/TypeScript specialized workflows
 - **dev-workflows-dotnet** - .NET/C#/ASP.NET Core Web API/Azure specialized workflows
 - **dev-workflows-blazor** - Blazor specialized workflows
@@ -30,7 +30,7 @@ This marketplace includes the following plugins:
 
 These plugins provide end-to-end workflows for AI-assisted development. Choose what fits your project:
 
-### Backend or General Development
+### Service / Backend or General Development
 
 ```bash
 # 1. Start Claude Code
@@ -39,7 +39,7 @@ claude
 # 2. Install the marketplace
 /plugin marketplace add shinpr/claude-code-workflows
 
-# 3. Install backend plugin
+# 3. Install service/backend plugin
 /plugin install dev-workflows@claude-code-workflows
 
 # 4. Reload plugins
@@ -95,17 +95,20 @@ claude
 
 ### Full-Stack Development
 
-Install both plugins to get the complete toolkit for backend and frontend work.
+Install the plugin pair that matches your stack to get the complete cross-layer toolkit.
 
 ```bash
-# Use fullstack commands for cross-layer features
-/recipe-fullstack-implement "Add user authentication with JWT + login form"
+# Existing web stack example
+/recipe-fullstack-implement "Add user authentication with JWT + React login form"
+
+# .NET + Blazor example
+/recipe-fullstack-implement "Add user authentication with JWT + Blazor login form"
 
 # Or execute from existing fullstack work plan
 /recipe-fullstack-build
 ```
 
-The fullstack recipes create separate Design Docs per layer (backend + frontend), verify cross-layer consistency via design-sync, and route tasks to the appropriate executor based on filename patterns. See [Fullstack Workflow](#fullstack-workflow) for details.
+The fullstack recipes create separate Design Docs per layer (service/backend + UI/client), verify cross-layer consistency via design-sync, and route tasks to the appropriate executor based on filename patterns. See [Fullstack Workflow](#fullstack-workflow) for details.
 
 ### External Plugins
 
@@ -154,9 +157,35 @@ Skills auto-load when relevant — `coding-principles` activates during implemen
 
 <a id="warning-duplicate-skills"></a>
 
-> **Warning:** dev-skills and dev-workflows / dev-workflows-frontend share the same skills. Installing both causes skill descriptions to appear twice in the system context. Claude Code limits skill descriptions to ~2% of the context window — exceeding this limit causes skills to be silently ignored.
+> **Warning:** `dev-skills` overlaps with `dev-workflows` and `dev-workflows-frontend`, and `dev-skills-dotnet` overlaps with `dev-workflows-dotnet` and `dev-workflows-blazor`. Installing both a skills-only plugin and a workflow plugin from the same stack family duplicates skill descriptions in system context. Claude Code limits skill descriptions to about 2% of the context window, so duplicated skills may be silently ignored.
 
-> The same caution applies to `dev-skills-dotnet` and the new `.NET`/`Blazor` workflow plugins while the .NET-specific skill set is being split into stack-specific variants.
+### Sync Into an Existing Local Marketplace
+
+If you keep a personal local marketplace under `~/.claude`, this repo includes a sync script that vendors the repo-local plugins into that marketplace without installing them.
+
+```bash
+./scripts/sync-to-local-marketplace.sh
+```
+
+Defaults:
+- Source repo: current checkout
+- Target marketplace: `~/.claude/plugins/marketplaces/local-plugins`
+- Synced plugins: `dev-workflows`, `dev-workflows-frontend`, `dev-workflows-dotnet`, `dev-workflows-blazor`, `dev-skills`, `dev-skills-dotnet`
+- External Git-backed plugins are not copied
+
+Optional flags:
+
+```bash
+./scripts/sync-to-local-marketplace.sh --dry-run
+./scripts/sync-to-local-marketplace.sh --target ~/.claude/plugins/marketplaces/local-plugins
+./scripts/sync-to-local-marketplace.sh --source /path/to/your/fork
+```
+
+The script updates the local marketplace manifest, preserves unrelated existing plugins, and prints install commands such as:
+
+```text
+/plugin install dev-workflows@local-plugins
+```
 
 ---
 
@@ -236,17 +265,17 @@ graph TB
 
 All workflow entry points use the `recipe-` prefix to distinguish them from knowledge skills. Type `/recipe-` and use tab completion to see all available recipes.
 
-### Backend & General Development (dev-workflows)
+### Service / Backend & General Development (dev-workflows)
 
 | Recipe | Purpose | When to Use |
 |--------|---------|-------------|
 | `/recipe-implement` | End-to-end feature development | New features, complete workflows |
-| `/recipe-fullstack-implement` | End-to-end fullstack development | Cross-layer features (requires both plugins) |
+| `/recipe-fullstack-implement` | End-to-end fullstack development | Cross-layer features (requires matching service/backend + UI plugins) |
 | `/recipe-task` | Execute single task with precision | Bug fixes, small changes |
 | `/recipe-design` | Create design documentation | Architecture planning |
 | `/recipe-plan` | Generate work plan from design | Planning phase |
 | `/recipe-build` | Execute from existing task plan | Resume implementation |
-| `/recipe-fullstack-build` | Execute fullstack task plan | Resume cross-layer implementation (requires both plugins) |
+| `/recipe-fullstack-build` | Execute fullstack task plan | Resume cross-layer implementation (requires matching service/backend + UI plugins) |
 | `/recipe-review` | Verify code against design docs | Post-implementation check |
 | `/recipe-diagnose` | Investigate problems and derive solutions | Bug investigation, root cause analysis |
 | `/recipe-reverse-engineer` | Generate PRD/Design Docs from existing code | Legacy system documentation, codebase understanding |
@@ -257,15 +286,15 @@ All workflow entry points use the `recipe-` prefix to distinguish them from know
 
 | Recipe | Purpose | When to Use |
 |--------|---------|-------------|
-| `/recipe-front-design` | Create UI Spec + frontend Design Doc | React component architecture, UI Spec |
-| `/recipe-front-plan` | Generate frontend work plan | Component breakdown planning |
-| `/recipe-front-build` | Execute frontend task plan | Resume React implementation |
+| `/recipe-front-design` | Create UI Spec + UI/client Design Doc | React component architecture, UI Spec |
+| `/recipe-front-plan` | Generate UI/client work plan | Component breakdown planning |
+| `/recipe-front-build` | Execute UI/client task plan | Resume React implementation |
 | `/recipe-front-review` | Verify code against design docs | Post-implementation check |
 | `/recipe-task` | Execute single task with precision | Component fixes, small updates |
 | `/recipe-diagnose` | Investigate problems and derive solutions | Bug investigation, root cause analysis |
 | `/recipe-update-doc` | Update existing design documents with review | Spec changes, review feedback, document maintenance |
 
-> **Tip**: Both plugins share `/recipe-task`, `/recipe-diagnose`, and `/recipe-update-doc`. `/recipe-update-doc` auto-detects the document's layer. If your project has frontend Design Docs, the frontend plugin is needed to update them. For reverse engineering, use `/recipe-reverse-engineer` with the fullstack option to generate both backend and frontend Design Docs in a single workflow.
+> **Tip**: The service/backend and UI-specialized plugins share `/recipe-task`, `/recipe-diagnose`, and `/recipe-update-doc`. `/recipe-update-doc` auto-detects the document's layer. If your project has UI/client Design Docs, the matching UI plugin is needed to update them. For reverse engineering, use `/recipe-reverse-engineer` with the fullstack option to generate both service/backend and UI/client Design Docs in a single workflow.
 
 ### .NET / Azure Development (dev-workflows-dotnet)
 
@@ -286,9 +315,9 @@ All workflow entry points use the `recipe-` prefix to distinguish them from know
 
 | Recipe | Purpose | When to Use |
 |--------|---------|-------------|
-| `/recipe-front-design` | Create UI Spec + frontend Design Doc | Blazor page and component architecture, UI Spec |
-| `/recipe-front-plan` | Generate frontend work plan | Blazor page/component breakdown planning |
-| `/recipe-front-build` | Execute frontend task plan | Resume Blazor implementation |
+| `/recipe-front-design` | Create UI Spec + UI/client Design Doc | Blazor page and component architecture, UI Spec |
+| `/recipe-front-plan` | Generate UI/client work plan | Blazor page/component breakdown planning |
+| `/recipe-front-build` | Execute UI/client task plan | Resume Blazor implementation |
 | `/recipe-front-review` | Verify code against design docs | Post-implementation check |
 | `/recipe-task` | Execute single task with precision | Component fixes, small UI updates |
 | `/recipe-diagnose` | Investigate problems and derive solutions | Bug investigation, root cause analysis |
@@ -318,7 +347,7 @@ These agents work the same way whether you're building a REST API or a UI applic
 | **solver** | Generates solutions with tradeoff analysis and implementation steps |
 | **security-reviewer** | Reviews implementation for security compliance after all tasks complete |
 
-### Backend-Specific Agents (dev-workflows)
+### Service/Backend-Specific Agents (dev-workflows)
 
 | Agent | What It Does |
 |-------|--------------|
@@ -328,7 +357,7 @@ These agents work the same way whether you're building a REST API or a UI applic
 | **code-verifier** | Validates consistency between documentation and code implementation |
 | **acceptance-test-generator** | Creates E2E and integration test scaffolds from requirements |
 | **integration-test-reviewer** | Reviews integration/E2E tests for skeleton compliance and quality |
-| **task-executor** | Implements backend features with TDD |
+| **task-executor** | Implements service/backend features with TDD |
 | **quality-fixer** | Runs tests, fixes type errors, handles linting - everything quality-related |
 | **rule-advisor** | Picks the best coding rules for your current task |
 
@@ -371,7 +400,7 @@ These agents work the same way whether you're building a REST API or a UI applic
 
 ## 📚 Built-in Best Practices
 
-The backend plugin includes proven best practices that work with any language:
+The service/backend plugin includes proven best practices that work with any language:
 
 - **Coding Principles** - Code quality standards
 - **Testing Principles** - TDD, coverage, test patterns
@@ -408,7 +437,7 @@ Each phase runs in a fresh agent context, so quality doesn't degrade as the task
 - **Implement** → task-executor builds and tests each task, quality-fixer verifies before every commit
 - **Verify** → acceptance criteria trace from design through test skeletons, so nothing is left implicit
 
-The frontend plugin adds React-specific agents, and the Blazor plugin adds Blazor-specific UI agents and UI Spec generation from optional prototype code.
+The React plugin adds React-specific agents, and the Blazor plugin adds Blazor-specific UI agents and UI Spec generation from optional prototype code.
 
 The new .NET plugin family now includes both backend and UI-specialized surfaces:
 - `dev-workflows-dotnet` uses .NET-specific skills and backend agents for C#, ASP.NET Core Web API, and Azure-oriented work
@@ -427,7 +456,7 @@ UI Spec bridges this by capturing component states, interactions, and acceptance
 
 ## 🎯 Typical Workflows
 
-### Backend Feature Development
+### Service / Backend Feature Development
 
 ```bash
 /recipe-implement "Add user authentication with JWT"
@@ -450,7 +479,7 @@ UI Spec bridges this by capturing component states, interactions, and acceptance
 # 1. Analyzes requirements
 # 2. Asks for prototype code (optional)
 # 3. Creates UI Specification (screen structure, components, interactions)
-# 4. Creates frontend Design Doc (inherits UI Spec decisions)
+# 4. Creates UI/client Design Doc (inherits UI Spec decisions)
 #
 # Then run:
 /recipe-front-build
@@ -471,16 +500,16 @@ UI Spec bridges this by capturing component states, interactions, and acceptance
 # 1. Analyzes requirements (same as /recipe-implement)
 # 2. Creates PRD covering the entire feature
 # 3. Asks for prototype code, creates UI Specification
-# 4. Creates separate Design Docs for backend AND frontend
+# 4. Creates separate Design Docs for service/backend AND UI/client
 # 5. Verifies cross-layer consistency via design-sync
 # 6. Creates work plan with vertical feature slices
-# 7. Decomposes into layer-aware tasks (backend/frontend/fullstack)
+# 7. Decomposes into layer-aware tasks (service/backend, UI/client, fullstack)
 # 8. Routes each task to the appropriate executor
 # 9. Runs layer-appropriate quality checks
 # 10. Commits vertical slices for early integration
 ```
 
-> **Requires both plugins installed.** The fullstack recipes create separate Design Docs per layer and route tasks to backend or frontend executors based on filename patterns (`*-backend-task-*`, `*-frontend-task-*`). For reverse engineering existing fullstack codebases, use `/recipe-reverse-engineer` with the fullstack option.
+> **Requires the matching service/backend + UI plugin pair.** The fullstack recipes create separate Design Docs per layer and route tasks to service/backend or UI/client executors based on filename patterns (`*-backend-task-*`, `*-frontend-task-*`). For reverse engineering existing fullstack codebases, use `/recipe-reverse-engineer` with the fullstack option.
 
 ### Quick Fixes (Both Plugins)
 
@@ -488,7 +517,7 @@ UI Spec bridges this by capturing component states, interactions, and acceptance
 /recipe-task "Fix validation error message"
 
 # Direct implementation with quality checks
-# Works the same in both plugins
+# Works the same in the service/backend and UI-specialized plugins
 ```
 
 ### Code Review
@@ -526,7 +555,7 @@ UI Spec bridges this by capturing component states, interactions, and acceptance
 # 5. Generates Design Docs with code verification
 # 6. Produces complete documentation from existing code
 #
-# Fullstack option: generates both backend and frontend Design Docs per feature unit
+# Fullstack option: generates both service/backend and UI/client Design Docs per feature unit
 ```
 
 > If you're working with undocumented legacy code, these commands are designed to make it AI-friendly by generating PRD and design docs.
@@ -539,9 +568,9 @@ UI Spec bridges this by capturing component states, interactions, and acceptance
 ```
 claude-code-workflows/
 ├── .claude-plugin/
-│   └── marketplace.json        # Manages both plugins
+│   └── marketplace.json        # Manages the plugin catalog
 │
-├── agents/                     # Shared agents (symlinked by both plugins)
+├── agents/                     # Shared agents (symlinked by multiple plugins)
 │   ├── codebase-analyzer.md     # Pre-design codebase analysis
 │   ├── code-reviewer.md
 │   ├── code-verifier.md        # Design verification & reverse engineering
@@ -582,14 +611,14 @@ claude-code-workflows/
 │       └── plugin.json
 │
 ├── dotnet/                     # dev-workflows-dotnet plugin
-│   ├── agents/                 # Initial fork of backend workflow assets
-│   ├── skills/                 # Initial fork of shared skills
+│   ├── agents/                 # .NET-specialized workflow assets
+│   ├── skills/                 # .NET-specialized shared and recipe skills
 │   └── .claude-plugin/
 │       └── plugin.json
 │
 ├── blazor/                     # dev-workflows-blazor plugin
-│   ├── agents/                 # Initial fork of frontend workflow assets
-│   ├── skills/                 # Initial fork of frontend-oriented skills
+│   ├── agents/                 # Blazor-specialized UI workflow assets
+│   ├── skills/                 # Blazor-specialized UI skills
 │   └── .claude-plugin/
 │       └── plugin.json
 │
@@ -599,9 +628,12 @@ claude-code-workflows/
 │       └── plugin.json
 │
 ├── skills-dotnet/              # dev-skills-dotnet plugin (knowledge skills only, no recipes/agents)
-│   ├── skills/                 # Initial fork of skills-only assets for .NET/Azure specialization
+│   ├── skills/                 # .NET/Azure-specialized knowledge skills
 │   └── .claude-plugin/
 │       └── plugin.json
+│
+├── scripts/
+│   └── validate-plugin-structure.sh  # Smoke-check plugin manifests and pointer files
 │
 ├── LICENSE
 └── README.md
@@ -614,17 +646,17 @@ claude-code-workflows/
 **Q: Which plugin should I install?**
 
 A: Depends on what you're building:
-- **Backend, APIs, CLI tools, or general programming** → Install `dev-workflows`
+- **APIs, services, CLI tools, or general programming** → Install `dev-workflows`
 - **React apps** → Install `dev-workflows-frontend`
 - **ASP.NET Core Web API, C#, or Azure-heavy backends** → Install `dev-workflows-dotnet`
 - **Blazor apps** → Install `dev-workflows-blazor`
-- **Full-stack projects** → Install both
+- **Full-stack projects** → Install the matching service/backend + UI pair
 
-Both plugins can run side-by-side without conflicts.
+The matching plugin pairs can run side-by-side without conflicts.
 
-**Q: Can I use both plugins at the same time?**
+**Q: Can I use multiple plugins at the same time?**
 
-A: Yes. Install the pair that matches your stack. For example, use `dev-workflows` + `dev-workflows-frontend` for the existing Node/React flow, or `dev-workflows-dotnet` + `dev-workflows-blazor` for the new .NET/Blazor flow.
+A: Yes. Install the pair that matches your stack. For example, use `dev-workflows` + `dev-workflows-frontend` for the existing web stack, or `dev-workflows-dotnet` + `dev-workflows-blazor` for the `.NET`/Blazor stack.
 
 **Q: Do I need to learn special commands?**
 
