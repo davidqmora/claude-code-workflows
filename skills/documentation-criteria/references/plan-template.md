@@ -9,7 +9,7 @@ Related Issue/PR: #XXX (if any)
 ## Related Documents
 - Design Doc(s):
   - [docs/design/XXX.md]
-  - [docs/design/YYY.md] (if multiple, e.g. backend + frontend)
+  - [docs/design/YYY.md] (if multiple, e.g. service/backend + UI/client)
 - ADR: [docs/adr/ADR-XXXX.md] (if any)
 - PRD: [docs/prd/XXX.md] (if any)
 

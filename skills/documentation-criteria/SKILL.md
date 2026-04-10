@@ -9,7 +9,7 @@ description: Documentation creation criteria including PRD, ADR, Design Doc, and
 
 - **[prd-template.md](references/prd-template.md)** - Product Requirements Document template
 - **[adr-template.md](references/adr-template.md)** - Architecture Decision Record template
-- **[ui-spec-template.md](references/ui-spec-template.md)** - UI Specification template (frontend/fullstack features)
+- **[ui-spec-template.md](references/ui-spec-template.md)** - UI Specification template (UI/client/fullstack features)
 - **[design-template.md](references/design-template.md)** - Technical Design Document template
 - **[plan-template.md](references/plan-template.md)** - Work Plan template
 - **[task-template.md](references/task-template.md)** - Task file template for implementation tasks
@@ -18,8 +18,8 @@ description: Documentation creation criteria including PRD, ADR, Design Doc, and
 
 | Condition | Required Documents | Creation Order |
 |-----------|-------------------|----------------|
-| New Feature Addition (backend) | PRD → [ADR] → Design Doc → Work Plan | After PRD approval |
-| New Feature Addition (frontend/fullstack) | PRD → **UI Spec** → [ADR] → Design Doc → Work Plan | UI Spec before Design Doc |
+| New Feature Addition (service/backend) | PRD → [ADR] → Design Doc → Work Plan | After PRD approval |
+| New Feature Addition (UI/client/fullstack) | PRD → **UI Spec** → [ADR] → Design Doc → Work Plan | UI Spec before Design Doc |
 | ADR Conditions Met (see below) | ADR → Design Doc → Work Plan | Start immediately |
 | 6+ Files | ADR → Design Doc → Work Plan (Required) | Start immediately |
 | 3-5 Files | Design Doc → Work Plan (Recommended) | Start immediately |
@@ -84,7 +84,7 @@ description: Documentation creation criteria including PRD, ADR, Design Doc, and
 
 ### UI Specification
 
-**Purpose**: Define UI structure, screen transitions, component decomposition, and interaction design for frontend features
+**Purpose**: Define UI structure, screen transitions, component decomposition, and interaction design for UI/client-facing features
 
 **Includes**:
 - Screen list and transition conditions

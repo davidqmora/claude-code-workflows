@@ -39,7 +39,7 @@ The following subagents are available:
 6. **requirement-analyzer**: Requirement analysis and work scale determination
 7. **codebase-analyzer**: Analyze existing codebase to produce focused guidance for technical design
 8. **prd-creator**: Product Requirements Document creation
-9. **ui-spec-designer**: UI Specification creation from PRD and optional prototype code (frontend/fullstack features)
+9. **ui-spec-designer**: UI Specification creation from PRD and optional prototype code (UI/client/fullstack features)
 10. **technical-designer**: ADR/Design Doc creation
 11. **work-planner**: Work plan creation from Design Doc and test skeletons
 12. **document-reviewer**: Single document quality and rule compliance check
@@ -85,7 +85,7 @@ Assign work based on each subagent's responsibilities:
 **What to delegate to task-executor**:
 - Implementation work and test addition
 - Confirmation of added tests passing (existing tests are not covered)
-- Delegate quality assurance exclusively to quality-fixer (or quality-fixer-frontend for frontend tasks)
+- Delegate quality assurance exclusively to quality-fixer (or quality-fixer-frontend for UI-specialized tasks)
 
 **What to delegate to quality-fixer**:
 - Overall quality assurance (static analysis, style check, all test execution, etc.)
@@ -106,7 +106,7 @@ Autonomous execution MUST stop and wait for user input at these points.
 |-------|------------|---------------------|
 | Requirements | After requirement-analyzer completes | Confirm requirements / Answer questions |
 | PRD | After document-reviewer completes PRD review | Approve PRD |
-| UI Spec | After document-reviewer completes UI Spec review (frontend/fullstack) | Approve UI Spec |
+| UI Spec | After document-reviewer completes UI Spec review (UI/client/fullstack) | Approve UI Spec |
 | ADR | After document-reviewer completes ADR review (if ADR created) | Approve ADR |
 | Design | After design-sync completes consistency verification | Approve Design Doc |
 | Work Plan | After work-planner creates plan | Batch approval for implementation phase |
@@ -219,13 +219,13 @@ Criteria for timing when to call each agent:
 When receiving new features or change requests, start with requirement-analyzer.
 According to scale determination:
 
-### Large Scale (6+ Files) - 13 Steps (backend) / 15 Steps (frontend/fullstack)
+### Large Scale (6+ Files) - 13 Steps (service/backend) / 15 Steps (UI/client/fullstack)
 
 1. requirement-analyzer → Requirement analysis + Check existing PRD **[Stop]**
 2. prd-creator → PRD creation
 3. document-reviewer → PRD review **[Stop: PRD Approval]**
-4. **(frontend/fullstack only)** Ask user for prototype code → ui-spec-designer → UI Spec creation
-5. **(frontend/fullstack only)** document-reviewer → UI Spec review **[Stop: UI Spec Approval]**
+4. **(UI/client/fullstack only)** Ask user for prototype code → ui-spec-designer → UI Spec creation
+5. **(UI/client/fullstack only)** document-reviewer → UI Spec review **[Stop: UI Spec Approval]**
 6. technical-designer → ADR creation (if architecture/technology/data flow changes)
 7. document-reviewer → ADR review (if ADR created) **[Stop: ADR Approval]**
 8. codebase-analyzer → Codebase analysis (pass requirement-analyzer output + PRD path)
@@ -237,12 +237,12 @@ According to scale determination:
 14. work-planner → Work plan creation **[Stop: Batch approval]**
 15. task-decomposer → Autonomous execution → Completion report
 
-### Medium Scale (3-5 Files) - 9 Steps (backend) / 11 Steps (frontend/fullstack)
+### Medium Scale (3-5 Files) - 9 Steps (service/backend) / 11 Steps (UI/client/fullstack)
 
 1. requirement-analyzer → Requirement analysis **[Stop]**
 2. codebase-analyzer → Codebase analysis (pass requirement-analyzer output)
-3. **(frontend/fullstack only)** Ask user for prototype code → ui-spec-designer → UI Spec creation
-4. **(frontend/fullstack only)** document-reviewer → UI Spec review **[Stop: UI Spec Approval]**
+3. **(UI/client/fullstack only)** Ask user for prototype code → ui-spec-designer → UI Spec creation
+4. **(UI/client/fullstack only)** document-reviewer → UI Spec review **[Stop: UI Spec Approval]**
 5. technical-designer → Design Doc creation (pass codebase-analyzer output as additional context)
 6. code-verifier → Verify Design Doc against existing code (doc_type: design-doc)
 7. document-reviewer → Design Doc review (pass code-verifier results as code_verification)

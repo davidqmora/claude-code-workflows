@@ -29,7 +29,7 @@ Use AskUserQuestion to confirm:
 3. **Reference Architecture**: layered / mvc / clean / hexagonal / none
 4. **Human review**: Yes (recommended) / No (fully autonomous)
 5. **Fullstack design**: Yes / No
-   - Yes: For each functional unit, generate backend + frontend Design Docs
+   - Yes: For each functional unit, generate service/backend + UI/client Design Docs
    - Note: Requires both agents (technical-designer, technical-designer-frontend)
 
 ### 0.2 Output Configuration
@@ -48,7 +48,7 @@ Phase 1: PRD Generation
 Phase 2: Design Doc Generation (if requested)
   Step 6: Design Doc Scope Mapping (reuse Step 1 results, no re-discovery)
   Step 7-10: Per-unit loop (Generation → Verification → Review → Revision)
-  ※ fullstack=Yes: each unit produces backend + frontend Design Docs
+  ※ fullstack=Yes: each unit produces service/backend + UI/client Design Docs
 ```
 
 ## Phase 1: PRD Generation
@@ -257,12 +257,12 @@ prompt: |
 
 For each unit, invoke 7a then 7b sequentially (7b depends on 7a output):
 
-**7a. Backend Design Doc**:
+**7a. Service/Backend Design Doc**:
 ```
 subagent_type: dev-workflows:technical-designer
-description: "Generate backend Design Doc"
+description: "Generate service/backend Design Doc"
 prompt: |
-  Create a backend Design Doc for the following feature based on existing code.
+  Create a service/backend Design Doc for the following feature based on existing code.
 
   Operation Mode: reverse-engineer
 
@@ -281,12 +281,12 @@ prompt: |
 
 **Store output as**: `$STEP_7a_OUTPUT`
 
-**7b. Frontend Design Doc**:
+**7b. UI/Client Design Doc**:
 ```
 subagent_type: dev-workflows-frontend:technical-designer-frontend
-description: "Generate frontend Design Doc"
+description: "Generate UI/client Design Doc"
 prompt: |
-  Create a frontend Design Doc for the following feature based on existing code.
+  Create a UI/client Design Doc for the following feature based on existing code.
 
   Operation Mode: reverse-engineer
 
@@ -298,10 +298,10 @@ prompt: |
   Unit Inventory: $UNIT_INVENTORY
 
   Parent PRD: $APPROVED_PRD_PATH
-  Backend Design Doc: $STEP_7a_OUTPUT
+  Service/Backend Design Doc: $STEP_7a_OUTPUT
 
-  Reference backend Design Doc for API contracts.
-  Focus on: component hierarchy, state management, UI interactions, data fetching.
+  Reference service/backend Design Doc for API contracts.
+  Focus on: page/component hierarchy, state management, UI interactions, data fetching.
   Document current architecture as-is. Use Unit Inventory as completeness baseline.
 ```
 
@@ -365,7 +365,7 @@ prompt: |
 
 **Agent tool invocation (per Design Doc)**:
 ```
-subagent_type: dev-workflows:technical-designer (or dev-workflows-frontend:technical-designer-frontend for frontend Design Docs)
+subagent_type: dev-workflows:technical-designer (or dev-workflows-frontend:technical-designer-frontend for UI/client Design Docs)
 description: "Revise Design Doc"
 prompt: |
   Update Design Doc based on review feedback and code verification results.
