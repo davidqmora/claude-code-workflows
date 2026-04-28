@@ -14,6 +14,13 @@ plugin_dirs=(
   "skills-dotnet"
 )
 
+workflow_plugin_dirs=(
+  "backend"
+  "frontend"
+  "dotnet"
+  "blazor"
+)
+
 failures=0
 
 check_file_exists() {
@@ -57,6 +64,19 @@ for plugin_dir in "${plugin_dirs[@]}"; do
       check_file_exists "$plugin_dir/${agent_path#./}"
     done < <(sed -n 's/^[[:space:]]*"\(\.\/agents\/[^"]*\)".*/\1/p' "$manifest")
   fi
+done
+
+echo "Checking recipe command wrappers..."
+for plugin_dir in "${workflow_plugin_dirs[@]}"; do
+  if [[ ! -d "$plugin_dir/skills" ]]; then
+    continue
+  fi
+
+  while IFS= read -r skill_path; do
+    [[ -z "$skill_path" ]] && continue
+    skill_name="$(basename "$skill_path")"
+    check_file_exists "$plugin_dir/commands/${skill_name}.md"
+  done < <(find "$plugin_dir/skills" -maxdepth 1 -type f -name 'recipe-*' | sort)
 done
 
 echo "Checking plugin pointer files..."

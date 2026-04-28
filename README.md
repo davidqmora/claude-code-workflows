@@ -30,6 +30,8 @@ This marketplace includes the following plugins:
 
 These plugins provide end-to-end workflows for AI-assisted development. Choose what fits your project:
 
+> **Plugin command naming:** Claude Code plugin commands are invoked with the plugin namespace. Examples: `/dev-workflows:recipe-implement`, `/dev-workflows-frontend:recipe-front-design`, `/dev-workflows-dotnet:recipe-implement`, `/dev-workflows-blazor:recipe-front-design`.
+
 ### Service / Backend or General Development
 
 ```bash
@@ -46,7 +48,7 @@ claude
 /reload-plugins
 
 # 5. Start building
-/recipe-implement <your feature>
+/dev-workflows:recipe-implement <your feature>
 ```
 
 ### Frontend Development (React/TypeScript)
@@ -60,7 +62,7 @@ claude
 # 4-5. Same as above (reload plugins and start building)
 
 # Use frontend-specific commands
-/recipe-front-design <your feature>
+/dev-workflows-frontend:recipe-front-design <your feature>
 ```
 
 ### .NET / ASP.NET Core / Azure Development
@@ -75,7 +77,7 @@ claude
 /reload-plugins
 
 # 5. Start building
-/recipe-implement "Add an ASP.NET Core Web API endpoint with Azure integration"
+/dev-workflows-dotnet:recipe-implement "Add an ASP.NET Core Web API endpoint with Azure integration"
 ```
 
 ### Blazor Development
@@ -90,7 +92,7 @@ claude
 /reload-plugins
 
 # 5. Start building
-/recipe-front-design "Add a Blazor page and component workflow"
+/dev-workflows-blazor:recipe-front-design "Add a Blazor page and component workflow"
 ```
 
 ### Full-Stack Development
@@ -99,13 +101,13 @@ Install the plugin pair that matches your stack to get the complete cross-layer 
 
 ```bash
 # Existing web stack example
-/recipe-fullstack-implement "Add user authentication with JWT + React login form"
+/dev-workflows:recipe-fullstack-implement "Add user authentication with JWT + React login form"
 
 # .NET + Blazor example
-/recipe-fullstack-implement "Add user authentication with JWT + Blazor login form"
+/dev-workflows-dotnet:recipe-fullstack-implement "Add user authentication with JWT + Blazor login form"
 
 # Or execute from existing fullstack work plan
-/recipe-fullstack-build
+/dev-workflows:recipe-fullstack-build
 ```
 
 The fullstack recipes create separate Design Docs per layer (service/backend + UI/client), verify cross-layer consistency via design-sync, and route tasks to the appropriate executor based on filename patterns. See [Fullstack Workflow](#fullstack-workflow) for details.
@@ -660,7 +662,7 @@ A: Yes. Install the pair that matches your stack. For example, use `dev-workflow
 
 **Q: Do I need to learn special commands?**
 
-A: Not really. For backend-style plugins, start with `/recipe-implement`. For UI-specialized plugins, start with `/recipe-front-design`. The plugins handle everything else automatically.
+A: Start with the namespaced plugin command. For example, use `/dev-workflows:recipe-implement` for backend-style plugins, `/dev-workflows-frontend:recipe-front-design` for React/TypeScript, `/dev-workflows-dotnet:recipe-implement` for .NET, and `/dev-workflows-blazor:recipe-front-design` for Blazor.
 
 **Q: What if there are errors?**
 
